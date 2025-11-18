@@ -6,23 +6,31 @@ import Link from "next/link";
 import { NAV_LINKS } from "@/constants/links";
 import { PrimaryButton } from "./PrimaryButton";
 import { SecondaryButton } from "./SecondaryButton";
+import Logo from "./Logo";
+import { useEffect } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";   
+    } else {
+      document.body.style.overflow = "auto";  
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   return (
     <>
-    <nav className="fixed top-0 w-full z-50 bg-[color:var(--color-blue-gray-900)/80] backdrop-blur-md backdrop-brightness-[100%] pl-5 pr-3.5 py-3 md:px-10 md:py-5">
+    <nav className="fixed top-0 w-full z-50 bg-[#0C0922]/80
+                    backdrop-brightness-[85%] backdrop-blur-[5px]
+                    pl-5 pr-3.5 py-3 md:px-10 md:py-5 shadow-[0px_0px_20px_0px_rbga(67, 56, 202, 0.50)]">
       <div className="flex h-full items-center justify-between">
-        {/* logo */}
-        <div className="flex items-center space-x-3">
-          <img
-            src="/crone_logo.png"
-            alt="The Valthakan Logo"
-            className="h-[45px] w-[45px] object-contain"
-          />
-          <Link href="/" className="text-white text-xl font-medium font-serif">The Valthakan</Link>
-        </div>
+        <Logo/>
 
         {/* Hamburger Menu (Mobile) */}
         <button
